@@ -28,7 +28,7 @@ jobs:
                   git config --global --add safe.directory /work
                   git config --global user.name "mjhajharia"
                   git config --global user.email "meenal@mjhajharia.com"
-                  git checkout main
+                  git checkout new_main
                   git diff --name-only HEAD^ | grep '[.]*Rmd$' > last_modified_rmd_files.txt
                   while read -r filename; do   echo "$filename"; Rscript -e "rmarkdown::render('$filename')";   done < last_modified_rmd_files.txt
                   git diff --name-only HEAD^ | grep '[.]*qmd$' > last_modified_qmd_files.txt
@@ -36,8 +36,8 @@ jobs:
                   git add -A
                   git commit -m "Render Rmd files"
                   git diff --name-only --diff-filter=A HEAD^ > new_files.txt
-                  git checkout gh-pages
-                  git checkout main -- $(cat new_files.txt)
+                  git checkout new_gh-pages
+                  git checkout new_main -- $(cat new_files.txt)
                   git commit -m "Deploy to GitHub Pages"
-                  git push origin gh-pages
+                  git push origin new_gh-pages
 
